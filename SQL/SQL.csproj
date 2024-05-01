@@ -52,8 +52,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Scripts\Constraints.sql" />
     <Content Include="Scripts\CTE-CommonTableExpression.sql" />
     <Content Include="Scripts\Derived Table - Subquery.sql" />
+    <Content Include="Scripts\DynamicSQL.sql" />
+    <Content Include="Scripts\Index.sql" />
     <Content Include="Scripts\UDF - Function.sql" />
     <Content Include="Scripts\StoredProcedure.sql" />
     <Content Include="Scripts\Transaction.sql" />

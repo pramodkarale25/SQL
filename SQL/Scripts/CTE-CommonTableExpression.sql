@@ -1,7 +1,9 @@
-﻿with CTEEmployee(Customerid)
+﻿with CTEEmployee(EmpId, EmpName, DeptId, ManagerId)
 as
 (
-	select * from Customers
+	select * from Employee
 )
 
-select * from CTEEmployee
+select * 
+from CTEEmployee emp
+inner join 

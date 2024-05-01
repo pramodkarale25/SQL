@@ -6,6 +6,7 @@ namespace SQL
 {
     public class SQLQuery
     {
+        string connStr = "Data Source=PRAMOD;Initial Catalog=Test;Integrated Security=True";
         public void ConnectedArchitecture()
         {
 
@@ -104,8 +105,8 @@ namespace SQL
         {
             string sqlQuery = "select * from Customers where 0 = 1";
             SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = "Data Source=PRAMOD;Initial Catalog=Test;Integrated Security=True";
-            
+            conn.ConnectionString = connStr;
+
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, conn);
             DataSet dataSet = new DataSet();
             dataAdapter.TableMappings.Add("Table", "Customers");
@@ -130,6 +131,41 @@ namespace SQL
             cmd.ExecuteNonQuery();// for INSERT/UPDATE/DELETE
             cmd.ExecuteReader();// for reading multiple records
             cmd.ExecuteScalar();// for reading single value
+        }
+
+        public void CallSqlProcedure()
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                con.ConnectionString = "";
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "Proc Name";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader rdr = cmd.ExecuteReader();
+            }
+        }
+
+        public void CallSqlFunction()
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                con.ConnectionString = connStr;
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "select dbo.ScalarFun(@var1,@var2)";
+                SqlParameter sqlPar1 = new SqlParameter("@var1", SqlDbType.Int);
+                sqlPar1.Value = 10;
+                SqlParameter sqlPar2 = new SqlParameter("@var2", SqlDbType.Int);
+                sqlPar2.Value = 20;
+                cmd.Parameters.Add(sqlPar1);
+                cmd.Parameters.Add(sqlPar2);
+                int result = (int)cmd.ExecuteScalar();//For scaler valued function
+
+            }
         }
     }
 }
